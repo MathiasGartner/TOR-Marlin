@@ -121,7 +121,8 @@
 #endif
 #define  USB_DEVICE_SERIAL_NAME           "123985739853"
 
-//Version 1.2 is for video capture
+//Version 1.2 this version is for video capture
 //Version 1.3 introduces cord factors
 //Version 1.4 enable MONITOR_DRIVER_STATUS for OTPW
-#define TOR_VERSION "1.4"
+//Version 1.5 new Cord transformations
+#define TOR_VERSION "1.5"

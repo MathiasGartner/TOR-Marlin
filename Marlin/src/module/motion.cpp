@@ -961,6 +961,12 @@ FORCE_INLINE void segment_idle(millis_t &next_idle_ms) {
 float fromModifiedCordLength(float c) {
   float ub = c / PULLEY_RADIUS_2PI;  
   float cModified = PULLEY_RADIUS_2PI * ub - CORD_THICKNESS_EFFECTIVE_PI * ub * ub;
+    
+  //float tmp = CORD_CORRECTION_INV_C0 + CORD_CORRECTION_INV_C1 * c;
+  //float cModified = CORD_CORRECTION_INV_A * (CORD_CORRECTION_INV_B + SQRT(tmp));
+
+  //float cModified = c;
+
   return cModified;
 }        
 
@@ -985,6 +991,11 @@ float toModifiedCordLength(float c) {
   NOLESS(tmp, 0.0f);
   float uw = PULLEY_RADIUS_OVER_CORD_THICKNESS_EFFECTIVE - SQRT(tmp);
   float cModified = PULLEY_RADIUS_2PI * uw;
+  
+  //float cModified = CORD_CORRECTION_C * c + CORD_CORRECTION_C2 * c * c;
+  
+  //float cModified = c;
+
   return cModified;
 }        
 

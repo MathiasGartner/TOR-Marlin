@@ -592,6 +592,8 @@ void move_with_stallGuard(float x, float y, float z, float e, int16_t threshold)
   planner.synchronize();
   report_current_position();
   
+  endstops.report_states();
+  
   tmc_disable_stallguard(stepperX, stealth_states_dummy.x);
   tmc_disable_stallguard(stepperY, stealth_states_dummy.y);
   tmc_disable_stallguard(stepperZ, stealth_states_dummy.z);
@@ -689,6 +691,7 @@ void GcodeSuite::G28_TOR() {
       LOOP_XYZE(i) {
         tor_set_position(hp);
         move_with_stallGuard((AxisEnum)i, tightenPosition, tightenThreshold);
+        //dwell(1000);
       }
     }
     else {
@@ -696,6 +699,7 @@ void GcodeSuite::G28_TOR() {
       move_with_stallGuard(tighten_axis, tightenPosition, tightenThreshold);
     }
   }
+  //dwell(1000);
   
   //move to anchor and pull on other cords
   if (mode == 0 || mode == 1 || mode == 2) {
@@ -708,9 +712,11 @@ void GcodeSuite::G28_TOR() {
 
     tor_set_position(hp);
     tor_move_axis(anchor_axis, hp + releaseAnchorBeforeHomingPosition);
+    //dwell(1000);
 
     tor_set_position(hp);
     move_with_stallGuard(anchor_axis, tightenPosition, anchorThreshold);
+    //dwell(1000);
     
     //release anchor axis and tighten again with final threshold
     //tor_set_position(0);
@@ -730,11 +736,13 @@ void GcodeSuite::G28_TOR() {
     //release anchor axis slightly
     tor_set_position(0);
     tor_move_axis(anchor_axis, releasePositionOffset);
+    //dwell(1000);
     
     //tighten other axis
     LOOP_XYZE(i) {
       tor_set_position(hp);
       if (anchor_axis != (AxisEnum)i) move_with_stallGuard((AxisEnum)i, tightenPosition, tightenThreshold);
+      //dwell(1000);
     }
 
     int sleepTime = 20;
@@ -757,12 +765,15 @@ void GcodeSuite::G28_TOR() {
       LOOP_XYZE(i) {
         tor_set_position(hp);
         if (anchor_axis != (AxisEnum)i) move_with_stallGuard((AxisEnum)i, tightenPosition, tightenThreshold);
+        //dwell(1000);
       }
+      //dwell(1000);
     }
     
     //release anchor axis slightly
     tor_set_position(0);
     tor_move_axis(anchor_axis, 1);
+    //dwell(1000);
 
     //set anchor home position as current position position
     switch (anchor_axis) {
